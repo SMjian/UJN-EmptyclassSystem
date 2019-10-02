@@ -167,16 +167,19 @@ def tableToMatrix(rootdir,file,F):
 if __name__=='__main__':
     ErrorManage = open('ErrorManage.txt','a+')                          #创造一个错误处理文件     已经从正常文件中调了出来
     for F in fileManage(Root_dir):
-        for file in fileManage(Root_dir+'\\'+F):
-            try:
-                if tableToMatrix((Root_dir+'\\'+F),file,F) == 1:
-                    ErrorManage.write(F+'   '+file+'\n')
+        try:
+            for file in fileManage(Root_dir+'\\'+F):
+                try:
+                    if tableToMatrix((Root_dir+'\\'+F),file,F) == 1:
+                        ErrorManage.write(F+'   '+file+'\n')
+                    else:
+                        pass
+                except BaseException as e:
+                    pass                                                    #错误的是python处理文件时出来的直接跳过
                 else:
-                    pass
-            except BaseException as e:
-                pass                                                    #错误的是python处理文件时出来的直接跳过
-            else:
-                print(F+'   '+file+'    已完成'+'\n')                  #打点逐个输出查看错误
+                    print(F+'   '+file+'    已完成'+'\n')                  #打点逐个输出查看错误
+        except BaseException as e:
+            pass
     ErrorManage.close()
     CreatExcel()
     WriteExcel(table1)
